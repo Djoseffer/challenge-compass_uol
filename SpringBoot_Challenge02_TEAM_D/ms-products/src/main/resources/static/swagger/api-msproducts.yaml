@@ -1,0 +1,203 @@
+openapi: 3.0.0
+info:
+  title: ms-products
+  description: Descrição da API
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+paths:
+  /products/{productId}:
+    get:
+      summary: Search product by ID
+      description: This endpoint returns details of a product based on the provided ID.
+      responses:
+        200:
+          description: Successful response
+        404:
+          description: Product not found with the specified ID
+        500:
+          description: An unexpected error has occurred.
+  /products:
+    get:
+      summary: Return all products
+      description: This endpoint returns all products
+      responses:
+        200:
+          description: Sucess response
+        404:
+          description: No products found.
+        500:
+          description: An unexpected error occurred
+    post:
+      summary: Register a new product
+      description: This endpoint allows you to register a new product in the database.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Product name (unique)
+                description:
+                  type: string
+                  description: Product Description
+                value:
+                  type: number
+                  format: double
+                  description: Product value
+      responses:
+        201:
+          description: Product created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                    description: Product ID created
+                  name:
+                    type: string
+                    description: Product's name
+                  description:
+                    type: string
+                    description: Product Description
+                  value:
+                    type: number
+                    format: double
+                    description: Product value
+        400:
+          description: Invalid data sent
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                  status:
+                    type: string
+                  message:
+                    type: string
+        500:
+          description: An unexpected error occurred
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                  status:
+                    type: string
+                  message:
+                    type: string
+  /products/{id}:
+    put:
+      summary: Update product by id
+      description: Update products  - this endpoint update products in database
+      parameters:
+        - name: id
+          in: query
+          description: product id is needed for finding in database
+          required: true
+          schema:
+            type: long
+      responses:
+        201:
+          description: success updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: long
+                  name:
+                    type: string
+                  description:
+                    type: string
+                  value:
+                    type: double
+        404:
+          description: product id not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                  status:
+                    type: string
+                  message:
+                    type: string
+        400:
+          description: invalid data sent
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                  status:
+                    type: string
+                  message:
+                    type: string
+        500:
+          description: occurred an unexpected error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                  status:
+                    type: string
+                  message:
+                    type: string
+
+    delete:
+      summary: Delete product by id
+      description: Delete products  - this endpoint delete products in database
+      parameters:
+        - name: id
+          in: query
+          description: product id is needed for finding in database
+          required: true
+          schema:
+            type: long
+      responses:
+        200:
+          description: success updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: long
+                  name:
+                    type: string
+                  description:
+                    type: string
+                  value:
+                    type: double
+        404:
+          description: product id not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                  status:
+                    type: string
+                  message:
+                    type: string
